@@ -1,0 +1,33 @@
+ 
+  <script>  // Instantiate the SDK client
+    var client = new FamilySearch({  
+      // A client ID (app key) for sandbox is obtained by registering your app with the FamilySearch developer's website
+      // Copy your app key into the client_id parameter
+      client_id: 'a0T3000000BNAgBEAX',
+      
+      // When using the JavaScript SDK, the app's redirect URI does not need to be a
+      // page that actually exists, it just needs to be a page on the same domain.
+      // We will set the redirect URI to the base path of the current domain so that the sample app 
+      // will work wherever it runs. We don't have to change this between development and production.
+      redirect_uri: 'http://127.0.0.1:8080',
+  
+      // Store the access token in a cookie so that the user doesn't have to
+      // login every time the page loads
+      save_access_token: true,
+  
+      // Set the sandbox as the testing environment
+      environment: 'sandbox'
+    });
+
+    var login = function() {
+      client.getAccessToken().then(function(){
+        return client.getCurrentUser();
+      }).then(function(response) {
+        $('#user-info').append('CONGRATULATIONS!!! User '+response.getUser().getContactName()+' is signed in.');
+      });
+    };
+  </script>
+  <a href="#" onclick="login()"><h2>1. SIGN IN</h2></a><br><br>
+  <div id="user-info"></div>
+
+
