@@ -1,0 +1,69 @@
+ 
+  <h2>3. SEARCH FOR PEOPLE IN THE TREE </h2>
+  <div>
+    <div class="row">
+      <div class="form-group col-sm-6">
+        <label for="givenName">Given Name</label>
+        <input type="text" class="form-control" id="givenName" placeholder="given name">
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="surname">Surname</label>
+        <input type="text" class="form-control" id="surname" placeholder="surname">
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="birthDate">Birth Date</label>
+        <input type="text" class="form-control" id="birthDate" placeholder="birth date">
+      </div>
+    <p class="text-center"><button id="searchButton" class="btn btn-primary">Search</button></p>
+    </div>
+  </div>
+
+  <div id="search-results"></div>
+
+  <script> // Search the tree for persons
+    var $content = $('#search-results');
+  
+    // Search when the user clicks on the button.
+    $('#searchButton').click(function(){
+      $content.html('');    
+      var params = {
+        givenName: $('#givenName').val(),
+        surname: $('#surname').val(),
+        birthDate: $('#birthDate').val(),
+      };
+    
+      client.getPersonSearch(params).then(function(searchResponse){   
+        $('<h3>').text('Results').appendTo($content);
+        var $table = $('<table>').addClass('table');
+        $table.append(
+          $('<tr>')
+            .append('<th>Id</th>')
+            .append('<th>Name</th>')
+            .append('<th>Birth</th>')
+            .append('<th>Death</th>')
+        );
+      
+        var results = searchResponse.getSearchResults();
+        for(var i = 0; i < results.length; i++){
+          var result = results[i],
+              person = result.getPrimaryPerson(),
+              $row = $('<tr>').appendTo($table);
+          $('<td>').text(person.getId()).appendTo($row);
+          $('<td>').text(person.getDisplayName()).appendTo($row);
+          $('<td>').text(person.getDisplayBirthDate()).appendTo($row);
+          $('<td>').text(person.getDisplayDeathDate()).appendTo($row);
+        }
+      
+        $content.append($table);
+      
+      })
+      
+      // Catch any errors
+      .catch(function(e){
+        $loader.hide();
+        $content.append(displayError(e));
+      });
+    })
+  </script>
+  
+
