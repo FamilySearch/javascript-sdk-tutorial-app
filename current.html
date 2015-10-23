@@ -1,0 +1,29 @@
+
+  <script>    // Get the current tree person.
+    var readPerson = function (){
+      // From the user profile, extract the tree person ID.
+      client.getCurrentUser().then(function(userResponse){
+        return userResponse.getUser().getPersonId();
+      })
+  
+      // Retrieve the person
+      .then(function(personId){
+        return client.getPerson(personId);
+      })
+  
+      // Get the person from the response and print
+      .then(function(personResponse){
+        var person = personResponse.getPerson();
+        $('#read-person').append('<b>Name: </b>'+person.getDisplayName()+'<br><strong>Birth Date: </strong>'+person.getDisplayBirthDate());
+      })
+  
+      // Catch any errors
+      .catch(function(e){
+        $('#read-person').append(displayError(e));
+      });
+    }
+  </script>
+  <a href="#" onclick="readPerson()"><h2>2. READ THE CURRENT TREE PERSON</h2></a><br><br>
+  <div id="read-person"></div>
+  
+    
