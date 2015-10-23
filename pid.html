@@ -1,0 +1,35 @@
+  
+  <br><br><h2>4. READ A TREE PERSON BY ID</h2>
+  <div>
+    <div class="row">
+      <div class="form-group col-sm-6 col-md-4">
+        <label for="personIdInput">Person ID</label>
+        <input type="text" class="form-control" id="personIdInput" placeholder="Person Id">
+      </div>
+      <p class="text-center"><button id="submit" class="btn btn-primary">Read Person ID</button></p>
+    </div>
+  </div>
+
+  <div id="read-pid"></div>
+
+  <script> // Read tree person by ID
+    var $pidContent = $('#read-pid');
+    // When the user clicks on the button, get that person ID.
+    $('#submit').click(function(){
+      $pidContent.html('');
+      var pid = $('#personIdInput').val();
+
+      // Get the person and display the person information
+      client.getPerson(pid).then(function(personResponse){
+        var person = personResponse.getPerson();
+        $pidContent.append('<b>    Name: </b>'+person.getDisplayName()+'<br><b>Birth Date: </b>'+person.getDisplayBirthDate());
+      })
+    
+      // Catch any errors
+      .catch(function(e){
+        $pidContent.append(displayError(e));
+      });
+    
+    })
+  </script>
+
