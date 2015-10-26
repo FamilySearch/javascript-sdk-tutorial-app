@@ -14,7 +14,7 @@
       // Get the person from the response and print
       .then(function(personResponse){
         var person = personResponse.getPerson();
-        $('#read-person').append('<b>Name: </b>'+person.getDisplayName()+'<br><strong>Birth Date: </strong>'+person.getDisplayBirthDate());
+        $('#read-person').append('<b>Name: </b>'+person.getDisplayName()+'<br><strong>Birth Date: </strong>'+person.getDisplayBirthDate()+'<br><br>Now continue with the next step specified in tutorial.html.');
       })
   
       // Catch any errors
