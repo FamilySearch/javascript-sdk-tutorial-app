@@ -23,7 +23,7 @@
       client.getAccessToken().then(function(){
         return client.getCurrentUser();
       }).then(function(response) {
-        $('#user-info').append('CONGRATULATIONS!!! User '+response.getUser().getContactName()+' is signed in.');
+        $('#user-info').append('CONGRATULATIONS!!! User '+response.getUser().getContactName()+' is signed in.<br>Now continue with the next step specified in tutorial.html.');
       });
     };
   </script>
